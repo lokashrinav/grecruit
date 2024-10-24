@@ -15,24 +15,28 @@ function Header() {
       {/* Navigation Bar */}
       <nav className="navbar">
         <div className="container">
+          {/* Logo Section */}
           <div className="logo">
             <a href="/"><h1>GRecruit</h1></a>
           </div>
-          <ul className={`nav-links ${menuOpen ? 'active' : ''}`}>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#how-it-works">How It Works</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li>
-              <a href="https://github.com/lokashrinav/grecruit" target="_blank" rel="noopener noreferrer" className="github-link">
-                <FaGithub /> GitHub
-              </a>
-            </li>
-            {/* Add the Login button here */}
-            <li><a href="#login" className="login-btn">Login</a></li>
-          </ul>
-          <div className="menu-icon" onClick={toggleMenu}>
-            {menuOpen ? <FaTimes /> : <FaBars />}
+
+          {/* Navigation Links */}
+          <div className="nav-container">
+            <ul className={`nav-links ${menuOpen ? 'active' : ''}`}>
+              <li><a href="#features">Features</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#how-it-works">How It Works</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li>
+                <a href="https://github.com/lokashrinav/grecruit" target="_blank" rel="noopener noreferrer" className="github-link">
+                  <FaGithub /> GitHub
+                </a>
+              </li>
+              <li><a href="#login" className="login-btn">Login</a></li>
+            </ul>
+            <div className="menu-icon" onClick={toggleMenu}>
+              {menuOpen ? <FaTimes /> : <FaBars />}
+            </div>
           </div>
         </div>
       </nav>
@@ -40,7 +44,7 @@ function Header() {
       {/* Hero Section */}
       <div className="hero-section">
         <div className="hero-content">
-          <h1>Empowering Recruitment, Open-Source Style</h1>
+          <h1>GRecruit: Empowering Recruitment, Open-Source Style</h1>
           <p>
             GRecruit is an open-source recruitment platform built to streamline your hiring process.
           </p>

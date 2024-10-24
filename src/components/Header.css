@@ -2,7 +2,6 @@
     position: relative;
     background-color: #203c5c; /* Your specified color */
     color: white;
-    overflow: hidden;
   }
   
   /* Navigation Bar */
@@ -10,8 +9,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 30px;
-    width: 100%;
     background-color: #203c5c; /* Solid background for the header */
   }
   
@@ -19,8 +16,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
   }
   
   /* Logo Section */
@@ -244,6 +240,7 @@ a {
     border-radius: 5px;
     font-weight: bold;
     transition: background-color 0.3s;
+    margin-right: 15px;
   }
   
   .login-btn:hover {
@@ -314,3 +311,4 @@ a {
       margin-bottom: 15px;
     }
   }
+
