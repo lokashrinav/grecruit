@@ -3,15 +3,35 @@ import reactLogo from './assets/react.svg'
 import './Application.css'
 
 const Application = () => {
-  return (
+
+    const [file, setFile] = useState()
+    const [coverLetter, setCoverLetter] = useState()
+
+    function handleResumeUpload (event) {
+        setFile(event.target.files[0])
+    }
+
+    return (
     <div className="page">
-        <div className="name input1" aria-placeholder='Full Name...'></div>
-        <div className="email input1" aria-placeholder='Email...'></div>
-        <div className="phone input1" aria-placeholder='Format: 1-123-456-789'></div>
-        <div className="linkedin input1"></div>
-        <div className="github"></div>
+        Name: <input className="name input1" placeholder='Full Name...'></input>
+        Email: <input className="email input1" placeholder='Email...'></input>
+        PHone Number <input className="phone input1" placeholder='Format: 1-123-456-789'></input>
+        Linkedin <input className="linkedin input1"></input>
+        Github <input className="github"></input>
+        Resume
+        <input 
+            type="file" 
+            className="file-input" 
+            onChange={(e) => handleResumeUpload(e.target.files[0])} 
+        />
+        <button onClick={(e) => {
+            e.preventDefault(); 
+        }}>
+            Upload
+        </button>
+        Cover Letter <input className="github"></input>
     </div>
-  )
+    )
 }
 
 export default Application;

@@ -2,9 +2,23 @@
     width: 100%;
     height: 100%;
     overflow-wrap: normal;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 
 .input1 {
     width: 60%;
-    height: 100px;
+    height: 30px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.file-input {
+    display: none; /* Hide the input */
 }
