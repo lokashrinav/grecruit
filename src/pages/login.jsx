@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FaGithub, FaBars, FaTimes } from 'react-icons/fa';
+import { createClient } from '@supabase/supabase-js';
+import bcrypt from 'bcryptjs';
 
-
-// Styled Components
+// Styled Components (same as yours, I'll only focus on logic changes)
 const LoginWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -76,6 +77,8 @@ const ToggleFormLink = styled.p`
     text-decoration: underline;
   }
 `;
+
+
 const HeaderWrapper = styled.header`
   position: relative;
   background-color: #203c5c;
@@ -91,7 +94,7 @@ const Navbar = styled.nav`
   top: 0;
   width: 100%;
   z-index: 100;
-  background: rgba(0, 0, 0, 0.6);
+  background: #0a74da;
 `;
 
 const Container = styled.div`
@@ -237,20 +240,116 @@ const LoginButton = styled.a`
   }
 `;
 
+// Other styled components are the same as your current setup
+
+const supabaseUrl = 'https://jhqqhrqksiemdifeixha.supabase.co';
+const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+const saltRounds = 10;
+
+async function hashPassword(password) {
+  try {
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    return hashedPassword;
+  } catch (error) {
+    console.error('Error hashing password:', error);
+    throw error;
+  }
+}
+
+async function signUpUser(email, password) {
+  try {
+    const hashedPassword = await hashPassword(password);
+
+    // Save the user with the hashed password in Supabase
+    const { data, error } = await supabase.from('users').insert([
+      { email: email, password: hashedPassword }
+    ]);
+
+    if (error) throw error;
+
+    console.log('User signed up successfully:', data);
+  } catch (error) {
+    console.error('Error signing up user:', error);
+  }
+}
+
+async function verifyUser(email, enteredPassword) {
+  try {
+    // Fetch user data from Supabase based on the email
+    const { data, error } = await supabase
+      .from('users')
+      .select('password')
+      .eq('email', email)
+      .single();
+
+    if (error || !data) {
+      console.error('User not found:', error);
+      return false;
+    }
+
+    const hashedPassword = data.password;
+
+    // Compare the entered password with the hashed password
+    const isPasswordValid = await bcrypt.compare(enteredPassword, hashedPassword);
+
+    if (isPasswordValid) {
+      console.log('Password is valid! User logged in.');
+      return true;
+    } else {
+      console.log('Invalid password.');
+      return false;
+    }
+  } catch (error) {
+    console.error('Error verifying user:', error);
+    return false;
+  }
+}
+
 // Login Component
 function Login() {
-  const [isLogin, setIsLogin] = useState(true);
-
-  // Toggle between Login and Sign Up forms
-  const toggleForm = () => {
-    setIsLogin(!isLogin);
-  };
-
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Toggle menu for mobile devices
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  // Toggle between Login and Sign-Up forms
+  const toggleForm = () => {
+    setIsLogin(!isLogin);
+  };
+
+  // Handle form submission for login/sign-up
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (isLogin) {
+      // Handle Login
+      const isValid = await verifyUser(email, password);
+      if (isValid) {
+        alert('Login Successful!');
+        // Perform any post-login actions here, like redirecting
+      } else {
+        alert('Invalid email or password.');
+      }
+    } else {
+      // Handle Sign-Up
+      if (password !== confirmPassword) {
+        alert('Passwords do not match.');
+        return;
+      }
+
+      await signUpUser(email, password);
+      alert('Sign-Up Successful! Please log in.');
+      toggleForm(); // Switch to login form after sign-up
+    }
   };
 
   return (
@@ -281,19 +380,34 @@ function Login() {
       </Navbar>
       <LoginForm>
         <FormTitle>{isLogin ? 'Log In' : 'Sign Up'}</FormTitle>
-        <form>
+        <form onSubmit={handleSubmit}>
+          <Input
+            type="email"
+            placeholder="Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <Input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
           {!isLogin && (
-            <Input type="text" placeholder="Full Name" required />
-          )}
-          <Input type="email" placeholder="Email Address" required />
-          <Input type="password" placeholder="Password" required />
-          {!isLogin && (
-            <Input type="password" placeholder="Confirm Password" required />
+            <Input
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
           )}
           <Button type="submit">{isLogin ? 'Log In' : 'Sign Up'}</Button>
         </form>
         <ToggleFormLink onClick={toggleForm}>
-          {isLogin ? 'Don\'t have an account? ' : 'Already have an account? '}
+          {isLogin ? "Don't have an account? " : 'Already have an account? '}
           <span>{isLogin ? 'Sign Up' : 'Log In'}</span>
         </ToggleFormLink>
       </LoginForm>
