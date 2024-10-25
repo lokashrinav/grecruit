@@ -211,7 +211,7 @@ function Header() {
               <NavItem><Link to="/contact">Contact</Link></NavItem>
               <NavItem><a href="#security">Github</a></NavItem>
               <NavItem><a href="#contact">Documentation</a></NavItem>
-              <NavItem><LoginButton href="#login">Login</LoginButton></NavItem>
+              <NavItem><Link to="/login">Login/Sign Up</Link></NavItem>
             </NavLinks>
             <MenuIcon onClick={toggleMenu}>
               {menuOpen ? <FaTimes /> : <FaBars />}

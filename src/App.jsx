@@ -18,13 +18,13 @@ function App() {
     <Router> {/* Ensure the Router wraps your Routes */}
       <GlobalStyles />
       <div className="App">
-        <Header />
         <Routes>
           {/* Home Route includes Features, About, HowItWorks */}
           <Route 
             path="/" 
             element={
               <>
+                <Header />
                 <Features />
                 <About />
                 <HowItWorks />
