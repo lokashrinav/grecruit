@@ -4,17 +4,20 @@ import Features from './components/Features';
 import About from './components/About';
 import HowItWorks from './components/HowItWorks';
 import Footer from './components/Footer';
-import './App.css';
+import GlobalStyles from './GlobalStyles'; // Import the global styles
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <Features />
-      <About />
-      <HowItWorks />
-      <Footer />
-    </div>
+    <>
+      <GlobalStyles />
+      <div className="App">
+        <Header />
+        <Features />
+        <About />
+        <HowItWorks />
+        <Footer />
+      </div>
+    </>
   );
 }
 
