@@ -14,7 +14,6 @@ const LoginWrapper = styled.div`
   background-color: #f9f9f9;
   padding: 20px;
 `;
-
 const LoginForm = styled.div`
   background-color: white;
   padding: 40px;
