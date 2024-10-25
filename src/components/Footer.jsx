@@ -95,7 +95,7 @@ const FooterColumn = styled.div`
   }
 
 `
-const pWhite = styled.p`
+const PWhite = styled.p`
   color: white;
 `
 
@@ -113,7 +113,7 @@ function Footer() {
               <h1>GRecruit</h1>
             </div>
           </FooterLogo>
-          <pWhite>© 2024 GRecruit. Open-source for everyone.</pWhite>
+          <PWhite>© 2024 GRecruit. Open-source for everyone.</PWhite>
         </FooterTop>
         <FooterLinks>
           <FooterColumn>

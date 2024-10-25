@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaGithub, FaBars, FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 // Styled Components
 const HeaderWrapper = styled.header`
@@ -56,7 +57,7 @@ const NavLinks = styled.ul`
   padding: 30px;
   font-family: 'Roboto', sans-serif;
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     display: ${({ menuOpen }) => (menuOpen ? 'block' : 'none')}; /* Show or hide the menu */
     position: absolute;
     top: 0;
@@ -105,9 +106,10 @@ const MenuIcon = styled.div`
     transform: scale(1.1);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     display: block;
   }
+  margin-right: 20px;
 `;
 
 const HeroSection = styled.div`
@@ -203,15 +205,12 @@ function Header() {
           {/* Navigation Links */}
           <div>
             <NavLinks menuOpen={menuOpen}>
+            <NavItem><a href="#features">How To Start</a></NavItem>
               <NavItem><a href="#features">Features</a></NavItem>
-              <NavItem><a href="#about">About</a></NavItem>
-              <NavItem><a href="#how-it-works">How It Works</a></NavItem>
-              <NavItem><a href="#contact">Contact</a></NavItem>
-              <NavItem>
-                <GithubLink href="https://github.com/lokashrinav/grecruit" target="_blank" rel="noopener noreferrer">
-                  <FaGithub /> GitHub
-                </GithubLink>
-              </NavItem>
+              <NavItem><a href="#involved">Get Involved</a></NavItem>
+              <NavItem><Link to="/contact">Contact</Link></NavItem>
+              <NavItem><a href="#security">Github</a></NavItem>
+              <NavItem><a href="#contact">Documentation</a></NavItem>
               <NavItem><LoginButton href="#login">Login</LoginButton></NavItem>
             </NavLinks>
             <MenuIcon onClick={toggleMenu}>
